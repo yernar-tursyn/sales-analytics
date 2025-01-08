@@ -4,7 +4,22 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
-const productData = [
+interface Restaurant {
+  name: string
+  location?: string
+}
+
+interface Product {
+  name: string
+  sales: number
+  revenue: number
+}
+
+interface Props {
+  selectedRestaurant: Restaurant | null
+}
+
+const productData: Product[] = [
   { name: 'Биг Мак', sales: 1245, revenue: 373500 },
   { name: 'Чикен Макнаггетс', sales: 980, revenue: 245000 },
   { name: 'Картофель фри', sales: 1560, revenue: 234000 },
@@ -12,10 +27,14 @@ const productData = [
   { name: 'Чизбургер', sales: 1350, revenue: 202500 },
 ]
 
-export default function ProductPerformance({ selectedRestaurant }) {
-  const [sortBy, setSortBy] = useState('sales')
+export default function ProductPerformance({ selectedRestaurant }: Props) {
+  const [sortBy, setSortBy] = useState<keyof Product>('sales')
 
-  const sortedData = [...productData].sort((a, b) => b[sortBy] - a[sortBy])
+  const sortedData = [...productData].sort((a, b) => {
+    const aValue = a[sortBy] as number
+    const bValue = b[sortBy] as number
+    return bValue - aValue
+  })
 
   return (
     <motion.div
@@ -33,7 +52,7 @@ export default function ProductPerformance({ selectedRestaurant }) {
         <select
           id="sortBy"
           value={sortBy}
-          onChange={(e) => setSortBy(e.target.value)}
+          onChange={(e) => setSortBy(e.target.value as keyof Product)}
           className="border border-yellow-400 rounded p-2 bg-yellow-50 text-red-600 font-medium focus:outline-none focus:ring-2 focus:ring-yellow-400"
         >
           <option value="sales">Продажам</option>
@@ -48,10 +67,9 @@ export default function ProductPerformance({ selectedRestaurant }) {
           <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #fbbf24' }} />
           <Legend />
           <Bar dataKey="sales" fill="#ef4444" name="Продажи (шт.)" />
-          <Bar dataKey="revenue" fill="#3b82f6" name="Выручка (₽)" />
+          <Bar dataKey="revenue" fill="#3b82f6" name="Выручка (₸)" />
         </BarChart>
       </ResponsiveContainer>
     </motion.div>
   )
 }
-

@@ -4,7 +4,21 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin } from 'lucide-react'
 
-const restaurants = [
+interface Restaurant {
+  id: number
+  name: string
+  lat: number
+  lon: number
+  demand: 'Высокий' | 'Средний' | 'Низкий'
+  sales: number
+  visitors: number
+}
+
+interface Props {
+  setSelectedRestaurant: (restaurant: Restaurant | null) => void
+}
+
+const restaurants: Restaurant[] = [
   { id: 1, name: 'Ресторан A', lat: 55.7558, lon: 37.6173, demand: 'Высокий', sales: 1245300, visitors: 3240 },
   { id: 2, name: 'Ресторан B', lat: 55.7517, lon: 37.6178, demand: 'Средний', sales: 987600, visitors: 2580 },
   { id: 3, name: 'Ресторан C', lat: 55.7539, lon: 37.6208, demand: 'Низкий', sales: 654300, visitors: 1720 },
@@ -12,8 +26,8 @@ const restaurants = [
   { id: 5, name: 'Ресторан E', lat: 55.7544, lon: 37.6201, demand: 'Средний', sales: 876500, visitors: 2340 },
 ]
 
-export default function RestaurantMap({ setSelectedRestaurant }) {
-  const [hoveredRestaurant, setHoveredRestaurant] = useState(null)
+export default function RestaurantMap({ setSelectedRestaurant }: Props) {
+  const [hoveredRestaurant, setHoveredRestaurant] = useState<Restaurant | null>(null)
 
   return (
     <motion.div
@@ -62,7 +76,7 @@ export default function RestaurantMap({ setSelectedRestaurant }) {
         >
           <h3 className="text-lg font-semibold text-red-600 mb-2">{hoveredRestaurant.name}</h3>
           <p className="text-sm text-gray-600">Спрос: <span className="font-medium">{hoveredRestaurant.demand}</span></p>
-          <p className="text-sm text-gray-600">Продажи: <span className="font-medium">₽{hoveredRestaurant.sales.toLocaleString()}</span></p>
+          <p className="text-sm text-gray-600">Продажи: <span className="font-medium">₸{hoveredRestaurant.sales.toLocaleString()}</span></p>
           <p className="text-sm text-gray-600">Посетители: <span className="font-medium">{hoveredRestaurant.visitors}</span></p>
         </motion.div>
       )}
@@ -83,4 +97,3 @@ export default function RestaurantMap({ setSelectedRestaurant }) {
     </motion.div>
   )
 }
-

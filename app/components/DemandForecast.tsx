@@ -6,6 +6,15 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { generateText } from 'ai'
 import { openai } from '@ai-sdk/openai'
 
+interface Restaurant {
+  name: string
+  location?: string
+}
+
+interface Props {
+  selectedRestaurant: Restaurant | null
+}
+
 const initialData = [
   { name: '12:00', Бургеры: 400, Напитки: 240, Картошка: 320 },
   { name: '13:00', Бургеры: 300, Напитки: 139, Картошка: 220 },
@@ -16,7 +25,7 @@ const initialData = [
   { name: '18:00', Бургеры: 349, Напитки: 430, Картошка: 410 },
 ]
 
-export default function DemandForecast({ selectedRestaurant }) {
+export default function DemandForecast({ selectedRestaurant }: Props) {
   const [activeProduct, setActiveProduct] = useState('all')
   const [data] = useState(initialData)
   const [aiInsight, setAiInsight] = useState('')
@@ -100,4 +109,3 @@ export default function DemandForecast({ selectedRestaurant }) {
     </motion.div>
   )
 }
-

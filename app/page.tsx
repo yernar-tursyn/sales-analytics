@@ -14,9 +14,20 @@ import ProductRecommendations from './components/ProductRecommendations'
 import InventoryManagement from './components/InventoryManagement'
 import StaffManagement from './components/StaffManagement'
 
+interface Restaurant {
+  id: number
+  name: string
+  location?: string
+}
+
+interface ComponentProps {
+  selectedRestaurant: Restaurant | null
+  setSelectedRestaurant?: (restaurant: Restaurant | null) => void
+}
+
 export default function Dashboard() {
-  const [activeSection, setActiveSection] = useState('overview')
-  const [selectedRestaurant, setSelectedRestaurant] = useState(null)
+  const [activeSection, setActiveSection] = useState<string>('overview')
+  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null)
 
   const renderSection = () => {
     switch (activeSection) {
@@ -72,4 +83,3 @@ export default function Dashboard() {
     </div>
   )
 }
-

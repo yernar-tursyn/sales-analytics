@@ -4,6 +4,15 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
+interface Restaurant {
+  name: string
+  location?: string
+}
+
+interface Props {
+  selectedRestaurant: Restaurant | null
+}
+
 const revenueData = [
   { month: 'Янв', revenue: 1000000, profit: 200000 },
   { month: 'Фев', revenue: 1200000, profit: 240000 },
@@ -13,8 +22,8 @@ const revenueData = [
   { month: 'Июн', revenue: 1400000, profit: 280000 },
 ]
 
-export default function RevenueAnalysis({ selectedRestaurant }) {
-  const [dataType, setDataType] = useState('revenue')
+export default function RevenueAnalysis({ selectedRestaurant }: Props) {
+  const [dataType, setDataType] = useState<'revenue' | 'profit'>('revenue')
 
   return (
     <motion.div
@@ -32,7 +41,7 @@ export default function RevenueAnalysis({ selectedRestaurant }) {
         <select
           id="dataType"
           value={dataType}
-          onChange={(e) => setDataType(e.target.value)}
+          onChange={(e) => setDataType(e.target.value as 'revenue' | 'profit')}
           className="border border-yellow-400 rounded p-2 bg-yellow-50 text-red-600 font-medium focus:outline-none focus:ring-2 focus:ring-yellow-400"
         >
           <option value="revenue">Выручка</option>
@@ -47,13 +56,12 @@ export default function RevenueAnalysis({ selectedRestaurant }) {
           <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #fbbf24' }} />
           <Legend />
           {dataType === 'revenue' ? (
-            <Line type="monotone" dataKey="revenue" stroke="#ef4444" name="Выручка (₽)" />
+            <Line type="monotone" dataKey="revenue" stroke="#ef4444" name="Выручка (₸)" />
           ) : (
-            <Line type="monotone" dataKey="profit" stroke="#3b82f6" name="Прибыль (₽)" />
+            <Line type="monotone" dataKey="profit" stroke="#3b82f6" name="Прибыль (₸)" />
           )}
         </LineChart>
       </ResponsiveContainer>
     </motion.div>
   )
 }
-

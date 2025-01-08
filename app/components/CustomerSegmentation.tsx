@@ -21,7 +21,23 @@ const customerData = [
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
 
 interface Props {
-  selectedRestaurant: Restaurant
+  selectedRestaurant: Restaurant | null
+}
+
+interface ActiveShapeProps {
+  cx: number
+  cy: number
+  midAngle: number
+  innerRadius: number
+  outerRadius: number
+  startAngle: number
+  endAngle: number
+  fill: string
+  payload: {
+    name: string
+  }
+  percent: number
+  value: number
 }
 
 export default function CustomerSegmentation({ selectedRestaurant }: Props) {
@@ -66,7 +82,7 @@ export default function CustomerSegmentation({ selectedRestaurant }: Props) {
         <PieChart>
           <Pie
             activeIndex={activeIndex}
-            activeShape={renderActiveShape}
+            activeShape={(props: unknown) => renderActiveShape(props as ActiveShapeProps)}
             data={customerData}
             cx="50%"
             cy="50%"
@@ -92,7 +108,7 @@ export default function CustomerSegmentation({ selectedRestaurant }: Props) {
   )
 }
 
-const renderActiveShape = (props: any) => {
+const renderActiveShape = (props: ActiveShapeProps) => {
   const RADIAN = Math.PI / 180
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props
   const sin = Math.sin(-RADIAN * midAngle)

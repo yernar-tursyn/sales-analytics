@@ -5,6 +5,11 @@ import { motion } from 'framer-motion'
 import { generateText } from 'ai'
 import { openai } from '@ai-sdk/openai'
 
+interface Restaurant {
+  name: string
+  location?: string
+}
+
 const productData = [
   { name: 'Биг Мак', sales: 1245, revenue: 373500 },
   { name: 'Чикен Макнаггетс', sales: 980, revenue: 245000 },
@@ -13,7 +18,11 @@ const productData = [
   { name: 'Чизбургер', sales: 1350, revenue: 202500 },
 ]
 
-export default function ProductRecommendations({ selectedRestaurant }) {
+interface Props {
+  selectedRestaurant: Restaurant | null
+}
+
+export default function ProductRecommendations({ selectedRestaurant }: Props) {
   const [recommendations, setRecommendations] = useState('')
 
   useEffect(() => {
@@ -53,4 +62,3 @@ export default function ProductRecommendations({ selectedRestaurant }) {
     </motion.div>
   )
 }
-

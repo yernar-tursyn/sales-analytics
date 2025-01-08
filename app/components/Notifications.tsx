@@ -13,7 +13,7 @@ interface Notification {
   timestamp: Date
 }
 
-const notificationTemplates = [
+const notificationTemplates: Omit<Notification, 'id' | 'timestamp'>[] = [
   {
     type: 'warning',
     message: 'Заканчивается картофель фри (осталось менее 20%)',
@@ -46,7 +46,7 @@ export default function Notifications() {
 
   const addNotification = () => {
     const template = notificationTemplates[Math.floor(Math.random() * notificationTemplates.length)]
-    const newNotification = {
+    const newNotification: Notification = {
       id: Date.now(),
       ...template,
       timestamp: new Date(),
@@ -57,7 +57,7 @@ export default function Notifications() {
   useEffect(() => {
     addNotification()
 
-    const interval = setInterval(addNotification, 10000) 
+    const interval = setInterval(addNotification, 10000)
 
     return () => clearInterval(interval)
   }, [])
@@ -118,4 +118,3 @@ export default function Notifications() {
     </Card>
   )
 }
-
