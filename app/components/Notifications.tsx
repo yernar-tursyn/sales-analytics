@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ElementType } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Bell, AlertTriangle, TrendingUp, Users, ShoppingBag, ChefHat } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -9,7 +9,7 @@ interface Notification {
   id: number
   type: 'warning' | 'info' | 'alert' | 'success'
   message: string
-  icon: any
+  icon: ElementType
   timestamp: Date
 }
 
@@ -51,15 +51,13 @@ export default function Notifications() {
       ...template,
       timestamp: new Date(),
     }
-    setNotifications(prev => [newNotification, ...prev].slice(0, 5)) // Keep only last 5 notifications
+    setNotifications(prev => [newNotification, ...prev].slice(0, 5))
   }
 
   useEffect(() => {
-    // Add initial notification
     addNotification()
 
-    // Set up interval for new notifications
-    const interval = setInterval(addNotification, 10000) // 10 seconds
+    const interval = setInterval(addNotification, 10000) 
 
     return () => clearInterval(interval)
   }, [])

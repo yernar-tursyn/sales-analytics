@@ -18,7 +18,7 @@ const initialData = [
 
 export default function DemandForecast({ selectedRestaurant }) {
   const [activeProduct, setActiveProduct] = useState('all')
-  const [data, setData] = useState(initialData)
+  const [data] = useState(initialData)
   const [aiInsight, setAiInsight] = useState('')
   const [isAIEnabled, setIsAIEnabled] = useState(true)
 
