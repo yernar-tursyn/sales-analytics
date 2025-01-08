@@ -51,12 +51,15 @@ export default function Notifications() {
       ...template,
       timestamp: new Date(),
     }
-    setNotifications(prev => [newNotification, ...prev].slice(0, 5)) 
+    setNotifications(prev => [newNotification, ...prev].slice(0, 5)) // Keep only last 5 notifications
+  }
 
   useEffect(() => {
+    // Add initial notification
     addNotification()
 
-    const interval = setInterval(addNotification, 10000)
+    // Set up interval for new notifications
+    const interval = setInterval(addNotification, 10000) // 10 seconds
 
     return () => clearInterval(interval)
   }, [])
