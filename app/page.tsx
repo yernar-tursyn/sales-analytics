@@ -20,11 +20,6 @@ interface Restaurant {
   location?: string
 }
 
-interface ComponentProps {
-  selectedRestaurant: Restaurant | null
-  setSelectedRestaurant?: (restaurant: Restaurant | null) => void
-}
-
 export default function Dashboard() {
   const [activeSection, setActiveSection] = useState<string>('overview')
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null)
