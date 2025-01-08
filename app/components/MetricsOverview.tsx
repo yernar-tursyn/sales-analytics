@@ -3,21 +3,18 @@
 import { motion } from 'framer-motion'
 import { ArrowUpIcon, ArrowDownIcon } from 'lucide-react'
 
-// Описывает структуру данных о ресторане
 interface Restaurant {
   id: number
   name: string
   location?: string
 }
 
-// Описывает структуру метрики
 interface Metric {
   name: string
   value: string
   change: number
 }
 
-// Описывает пропсы компонента, в том числе selectedRestaurant
 interface MetricsOverviewProps {
   selectedRestaurant: Restaurant | null
 }
@@ -39,7 +36,6 @@ export default function MetricsOverview({ selectedRestaurant }: MetricsOverviewP
     >
       <h2 className="text-2xl font-semibold mb-4 text-red-600">Ключевые метрики</h2>
 
-      {/* Пример использования selectedRestaurant */}
       {selectedRestaurant ? (
         <p className="text-lg text-gray-600 mb-4">
           Ресторан: <strong>{selectedRestaurant.name}</strong>
