@@ -6,6 +6,11 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend, Sector } fro
 import { generateText } from 'ai'
 import { openai } from '@ai-sdk/openai'
 
+interface Restaurant {
+  name: string
+  location?: string
+}
+
 const customerData = [
   { name: 'Новые клиенты', value: 30 },
   { name: 'Случайные посетители', value: 25 },
@@ -15,11 +20,15 @@ const customerData = [
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
 
-export default function CustomerSegmentation({ selectedRestaurant }) {
+interface Props {
+  selectedRestaurant: Restaurant
+}
+
+export default function CustomerSegmentation({ selectedRestaurant }: Props) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [aiInsight, setAiInsight] = useState('')
 
-  const onPieEnter = (_, index) => {
+  const onPieEnter = (_: unknown, index: number) => {
     setActiveIndex(index)
   }
 
@@ -28,13 +37,13 @@ export default function CustomerSegmentation({ selectedRestaurant }) {
       try {
         const { text } = await generateText({
           model: openai('gpt-4o'),
-          prompt: `Based on the following customer segmentation data for a McDonald's restaurant, provide insights and recommendations:
+          prompt: `На основе следующих данных сегментации клиентов для ресторана McDonald's предоставьте инсайты и рекомендации:
           ${JSON.stringify(customerData)}
-          Consider strategies to increase customer loyalty and attract new customers.`,
+          Учитывайте стратегии для увеличения лояльности клиентов и привлечения новых.`,
         })
         setAiInsight(text)
       } catch (error) {
-        console.error('Error fetching AI insight:', error)
+        console.error('Ошибка при получении данных ИИ:', error)
         setAiInsight('Здесь будут представлены ИИ-аналитика, рекомендации и другие связанные функции.')
       }
     }
@@ -83,7 +92,7 @@ export default function CustomerSegmentation({ selectedRestaurant }) {
   )
 }
 
-const renderActiveShape = (props) => {
+const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props
   const sin = Math.sin(-RADIAN * midAngle)
@@ -128,4 +137,3 @@ const renderActiveShape = (props) => {
     </g>
   )
 }
-
